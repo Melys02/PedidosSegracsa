@@ -1,33 +1,7 @@
--- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2024 a las 05:31:55
--- Versión del servidor: 10.3.15-MariaDB
--- Versión de PHP: 7.3.6
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `bdPedidosSegracsa`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoria`
---
-
+CREATE database bdPedidosSegracsa;
+USE bdPedidosSegracsa;
 CREATE TABLE `categoria` (
   `id_cat` int(11) NOT NULL,
   `codigoCat` varchar(6) NOT NULL,
@@ -36,9 +10,7 @@ CREATE TABLE `categoria` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `cliente`
---
+
 
 CREATE TABLE `cliente` (
   `codigo_cli` int(11) NOT NULL,
@@ -47,11 +19,6 @@ CREATE TABLE `cliente` (
   `apellidoMCli` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comprobante`
---
 
 CREATE TABLE `comprobante` (
   `codigo_com` int(11) NOT NULL,
@@ -67,10 +34,7 @@ CREATE TABLE `comprobante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `detallecomp`
---
+select*from Usuario;
 
 CREATE TABLE `detallecomp` (
   `id_producto` int(11) NOT NULL,
@@ -80,10 +44,8 @@ CREATE TABLE `detallecomp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
+select*from Categoria;
 
---
--- Estructura de tabla para la tabla `inventariodetalle`
---
 
 CREATE TABLE `inventariodetalle` (
   `idInventario` int(11) NOT NULL,
@@ -97,11 +59,6 @@ CREATE TABLE `inventariodetalle` (
   `precio` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `producto`
---
 
 CREATE TABLE `producto` (
   `id_producto` int(11) NOT NULL,
@@ -111,11 +68,6 @@ CREATE TABLE `producto` (
   `id_cat` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipocomprobante`
---
 
 CREATE TABLE `tipocomprobante` (
   `codigo_tipocom` varchar(6) NOT NULL,
@@ -123,11 +75,6 @@ CREATE TABLE `tipocomprobante` (
   `valorComp` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario`
---
 
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
@@ -136,20 +83,12 @@ CREATE TABLE `usuario` (
   `password` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `usuario`
---
+
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `correo`, `password`) VALUES
 (0, 'admin', 'admin@gmail.com', '123456');
 
---
--- Índices para tablas volcadas
---
 
---
--- Indices de la tabla `categoria`
---
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id_cat`);
 
@@ -159,113 +98,74 @@ ALTER TABLE `categoria`
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`codigo_cli`);
 
---
--- Indices de la tabla `comprobante`
---
+
 ALTER TABLE `comprobante`
   ADD PRIMARY KEY (`codigo_com`),
   ADD KEY `fk_clientecomp` (`codigo_cli`),
   ADD KEY `fk_tipocomcomp` (`codigo_tipocom`);
 
---
--- Indices de la tabla `detallecomp`
---
+
 ALTER TABLE `detallecomp`
   ADD PRIMARY KEY (`id_producto`,`codigo_com`),
   ADD KEY `fk_compdetallecomp` (`codigo_com`);
 
---
--- Indices de la tabla `inventariodetalle`
---
+
 ALTER TABLE `inventariodetalle`
   ADD PRIMARY KEY (`idInventario`),
   ADD KEY `fk_productoinvdet` (`id_producto`);
 
---
--- Indices de la tabla `producto`
---
+
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`),
   ADD KEY `fk_categoriaproducto` (`id_cat`);
 
---
--- Indices de la tabla `tipocomprobante`
---
+
 ALTER TABLE `tipocomprobante`
   ADD PRIMARY KEY (`codigo_tipocom`);
 
---
--- Indices de la tabla `usuario`
---
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `correo` (`correo`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
 
---
--- AUTO_INCREMENT de la tabla `categoria`
---
 ALTER TABLE `categoria`
   MODIFY `id_cat` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `cliente`
---
+
 ALTER TABLE `cliente`
   MODIFY `codigo_cli` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `comprobante`
---
+
 ALTER TABLE `comprobante`
   MODIFY `codigo_com` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `inventariodetalle`
---
+
 ALTER TABLE `inventariodetalle`
   MODIFY `idInventario` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `producto`
---
+
 ALTER TABLE `producto`
   MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- Restricciones para tablas volcadas
---
 
---
--- Filtros para la tabla `comprobante`
---
 ALTER TABLE `comprobante`
   ADD CONSTRAINT `comprobante_ibfk_1` FOREIGN KEY (`codigo_cli`) REFERENCES `cliente` (`codigo_cli`),
   ADD CONSTRAINT `comprobante_ibfk_2` FOREIGN KEY (`codigo_tipocom`) REFERENCES `tipocomprobante` (`codigo_tipocom`);
 
---
--- Filtros para la tabla `detallecomp`
---
+
 ALTER TABLE `detallecomp`
   ADD CONSTRAINT `detallecomp_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
   ADD CONSTRAINT `detallecomp_ibfk_2` FOREIGN KEY (`codigo_com`) REFERENCES `comprobante` (`codigo_com`);
 
---
--- Filtros para la tabla `inventariodetalle`
---
+
 ALTER TABLE `inventariodetalle`
   ADD CONSTRAINT `inventariodetalle_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
---
--- Filtros para la tabla `producto`
---
+
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_cat`) REFERENCES `categoria` (`id_cat`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO tipocomprobante (codigo_tipocom, nombreCom, valorComp) VALUES
+('BOLETA', 'Boleta de venta', 'BB01'),
+('FACTUR', 'Factura de venta', 'FF01');
