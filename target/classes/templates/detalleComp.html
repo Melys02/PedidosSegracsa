@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Detalle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="alert alert-danger alert-dismissible fade show" th:if="${cabecera == null || detalle == null}" role="alert">
+        No existe detalle con la operacion asignada.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:unless="${cabecera == null || detalle == null}">
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cod. Comprobante: <span th:text="${cabecera.codigo_com}"></span></li>
+                <li class="list-group-item">Cliente: <span th:text="${cabecera.nombreCompletos()}"></span></li>
+                <li class="list-group-item">Fecha: <span th:text="${cabecera.fechaCom}"></span></li>
+                <li class="list-group-item">Tipo: <span th:text="${cabecera.codigo_tipocom}"></span></li>
+                <li class="list-group-item">Cod. Seguridad <span th:text="${cabecera.codigo_seguridad}"></span></li>
+            </ul>
+        </div>
+        <br>
+        <table class="table table-hover" style="padding-top: 10px; background-color: #d7cfff;">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Valor de venta</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="prod , iterator:${detalle}">
+                <td th:text="${prod.nombrePro}"></td>
+                <td th:text="${prod.precioPro}"></td>
+                <td th:text="${prod.cantidad}"></td>
+                <td><span th:text="${#numbers.formatDecimal(prod.Total(), 0, 'COMMA', 2, 'POINT')}"></span></td>
+            </tr>
+            <tr th:if="${detalle.size()==0}">
+                <td colspan="5" style="text-align: center;">No se encontraron datos</td>
+            </tr>
+
+            <tr th:unless="${detalle.size()==0}">
+                <td colspan="3" style="text-align: right;">Total</td>
+                <td th:text="${cabecera.preciototal}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

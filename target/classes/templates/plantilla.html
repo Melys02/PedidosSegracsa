@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <nav  th:fragment="menu" class="navbar navbar-expand-lg" style="background-color:#2C5E93;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/home" th:if="${session.usuario != null}">
+                <img src="/images/logo.jpg" style="width: 100px; height: 30px;"/>
+            </a>
+            <a class="navbar-brand" href="/" th:if="${session.usuario == null}">
+                <img src="/images/logo.jpg" style="width: 100px; height: 30px;"/>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.usuario != null}">
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/listarP">
+                            Productos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/listar">
+                            Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/comprobante/">
+                            Comprobante
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/listarinventariodetalle">
+                            Inventario
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.usuario == null}">
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link text-white" aria-current="page" href="/consultar">
+                            Consultar
+                        </a>
+                    </li>
+                </ul>
+
+
+                <form class="d-flex" th:if="${session.usuario != null}">
+                    <a href="/logout" class="btn btn-dark">
+                        Cerrar Sesión
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+</html>

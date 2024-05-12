@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>Nuevo Movimiento</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    </head>
+    <body style="background-color:#f0edff;">
+        <div th:replace="/plantilla.html :: menu"></div>
+        <div class="container" style="text-align:center;">
+            <h2 style="font-size:4em;">Nuevo Movimiento</h2>
+
+            <a href="/listarinventariodetalle" class="btn btn-secondary" style="margin:20px;">Regresar</a>
+
+            <form name="frmnuevo" method="post" th:action="@{/guardarinventariodetalle}" th:object="${inventariodetalle}">
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-floating">
+                            <select name="tipoMovimiento" id="tipoMovimiento" th:field="*{tipoMovimiento}" class="form-control">
+                                <option value="1">Salida</option>
+                                <option value="2">Entrada</option>
+                            </select> 
+                            <label for="codigo_cli">Tipo de Movimiento</label>
+                        </div>
+                    </div>
+                </div>		
+                <label style="padding:2px;">Producto:* </label><br>
+                <select th:field="*{id_producto}"class="form-control" style="padding-top:1em;" required>
+                    <option th:each="p :${producto}" th:value="${p.id_producto}" th:text="${p.nombrePro}"  style="background-color:#e1dbff; border-radius:20px; border-style: solid; border-color:#9782ff;">
+                    </option>
+                </select>
+                <label>Cantidad:*</label><br>
+                <input type="number" th:field="*{cantidad}" required class="form-control"><br>
+
+                <label>Precio:*</label><br>
+                <input type="number" th:field="*{precio}" required class="form-control"><br>
+
+                <input type="submit" value="Guardar" class="btn btn-success btn-lg" style="margin:20px;">
+
+            </form>
+
+
+
+        </div>
+    </body>
+    <
